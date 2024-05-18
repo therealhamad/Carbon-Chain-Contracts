@@ -21,9 +21,9 @@ contract CarbonChain is ERC20 {
         require(_initialAmount <= _maxLimit, "Max amount must be less than initial value");
         initialAmount = _initialAmount;
         //supply all the tokens to the creator of the contract
-        _mint(msg.sender, _initialAmount);
+        _mint(msg.sender, _initialAmount * (10**decimals()));
         //set one credit equal to one dollar in eth
-        creditValue = 32*10**18;
+        creditValue = 32*(10**decimals());
     }
 
     modifier sellReq(uint256 _sellAmount) {

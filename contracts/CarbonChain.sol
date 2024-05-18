@@ -54,7 +54,19 @@ contract CarbonChain is ERC20 {
     }
 
     function buyCredit(uint256 _amount, address _buyFrom) public payable buyReq(_amount, _buyFrom) returns(bool) {
-        (bool success, ) = forgMapping[_eventId].creator.call{value: forgMapping[_eventId].ticket_price*_ticketCount}("");
+        //$ to seller
+        (bool success, ) = _buyFrom.call{value: _amount*creditRate()}("");
+        
+        //CCT to buyer (90%)
+        ERC20 CCT = ERC20(address(this));
+
+        CCT.approve(address(this), _amount);
+
+        CCT.transferFrom(_buyFrom, msg.sender, (_amount*9)/10);
+
+        _burn(msg.sender, _amount/10);
+
+        return success;
     }
 
     function generateCredits() {

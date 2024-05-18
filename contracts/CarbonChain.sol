@@ -43,6 +43,10 @@ contract CarbonChain is ERC20 {
         _;
     }
 
+    modifier generateCreditsMod(string memory _textHash, address _awardee) {
+        _;
+    }
+
     function creditRate() public returns(uint256) {
         return ((creditValue*initialAmount)/totalSupply());
     }
@@ -69,8 +73,9 @@ contract CarbonChain is ERC20 {
         return success;
     }
 
-    function generateCredits() {
-
+    function generateCredits(string memory _textHash, address _awardee) public generateCreditsMod(_textHash, _awardee) returns(bool){
+        _mint(_awardee, totalSupply()/100);
+        return true;
     }
 
 }

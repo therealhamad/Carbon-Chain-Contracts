@@ -1,6 +1,8 @@
 //contracts/CarbonChain.sol
 //SPDX-License-Identifier: GPL-3.0-or-later
 
+//sepolia: 0xbA6D779Ebf3EADA6c805c29215751004dBDa46ef
+
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";

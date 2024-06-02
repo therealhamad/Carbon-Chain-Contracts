@@ -1,18 +1,16 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// sepolia: 0xbA6D779Ebf3EADA6c805c29215751004dBDa46ef
-
-// polygon: 0xF03c83b0fF20D5D5A13A15Fa8b0BA66385E9c91d
+// sepolia: 0xDa2e92f253d7E6e4fe40756ed8C57e7fE6607326
 
 pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import {AggregatorV3Interface} from "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 
-contract CarbonChain is ERC20 {
+contract CC is ERC20 {
     using Address for address;
-    
+
     uint256 public creditValue;
     uint256 public initialAmount;
     AggregatorV3Interface internal priceFeed;
@@ -65,17 +63,17 @@ contract CarbonChain is ERC20 {
         _;
     }
 
-    function creditRate() public returns (uint256) {
+    function creditRate() public view returns (uint256) {
         return ((creditValue * initialAmount) / totalSupply());
     }
 
     function getLatestPrice() public view returns (int) {
         (
-            /* uint80 roundID */,
-            int price,
-            /* uint startedAt */,
-            /* uint timeStamp */,
-            /* uint80 answeredInRound */
+            ,
+            /* uint80 roundID */ int price /* uint startedAt */ /* uint timeStamp */ /* uint80 answeredInRound */,
+            ,
+            ,
+
         ) = priceFeed.latestRoundData();
         return price;
     }
@@ -116,9 +114,9 @@ contract CarbonChain is ERC20 {
     }
 
     // Moonbeam's batchAll functionality
-    function batchAll(bytes[] memory calls) public {
-        for (uint i = 0; i < calls.length; i++) {
-            address(this).functionCall(calls[i], "Batch call failed");
-        }
-    }
+    // function batchAll(bytes[] memory calls) public {
+    //     for (uint i = 0; i < calls.length; i++) {
+    //         address(this).functionCall(calls[i], "Batch call failed");
+    //     }
+    // }
 }

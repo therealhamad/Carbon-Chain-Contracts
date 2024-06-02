@@ -8,8 +8,11 @@ pragma solidity ^0.8.4;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@openzeppelin/contracts/utils/Address.sol";
 
 contract CarbonChain is ERC20 {
+    using Address for address;
+    
     uint256 public creditValue;
     uint256 public initialAmount;
     AggregatorV3Interface internal priceFeed;
@@ -110,5 +113,12 @@ contract CarbonChain is ERC20 {
     ) public generateCreditsMod(_textHash, _awardee) returns (bool) {
         _mint(_awardee, totalSupply() / 100);
         return true;
+    }
+
+    // Moonbeam's batchAll functionality
+    function batchAll(bytes[] memory calls) public {
+        for (uint i = 0; i < calls.length; i++) {
+            address(this).functionCall(calls[i], "Batch call failed");
+        }
     }
 }
